@@ -1,9 +1,13 @@
 app_name = "frappe_pg"
-app_title = "Frappe Pg"
+app_title = "Frappe PostgreSQL Compatibility"
 app_publisher = "Shaid Azmin"
-app_description = "A Frappe apps"
+app_description = "Comprehensive PostgreSQL compatibility layer for Frappe/ERPNext"
 app_email = "azmin@excelbd.com"
-app_license = "mit"
+app_license = "MIT"
+app_version = "1.0.0"
+
+# Required apps
+required_apps = ["frappe"]
 
 # Apps
 # ------------------
@@ -81,9 +85,12 @@ app_license = "mit"
 
 # Installation
 # ------------
+# These hooks ensure PostgreSQL patches are applied at the right time
 
-# before_install = "frappe_pg.install.before_install"
-# after_install = "frappe_pg.install.after_install"
+after_install = "frappe_pg.postgres.database_patches.apply_postgres_fixes"
+after_migrate = "frappe_pg.postgres.database_patches.after_migrate"
+on_session_creation = "frappe_pg.postgres.database_patches.on_session_creation"
+
 
 # Uninstallation
 # ------------
